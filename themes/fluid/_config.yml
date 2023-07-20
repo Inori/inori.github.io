@@ -793,7 +793,7 @@ valine:
   meta: ['nick', 'mail', 'link']
   requiredFields: []
   pageSize: 10
-  lang: 'zh-CN'
+  lang: 'en'
   highlight: false
   recordIP: false
   serverURLs: ''
