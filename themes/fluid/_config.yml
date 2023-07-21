@@ -872,6 +872,8 @@ giscus:
   theme-light: light
   theme-dark: dark
   mapping: pathname
+  strict: 1
+  loading: lazy
   reactions-enabled: 1
   emit-metadata: 0
   input-position: top
