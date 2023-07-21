@@ -865,10 +865,10 @@ cusdis:
 # Based on GitHub Discussions, similar to Utterances
 # See: https://giscus.app/
 giscus:
-  repo: Inori/blog-discussion
-  repo-id: R_kgDOJ9-tlA
+  repo: Inori/inori.github.io
+  repo-id: R_kgDOJ9jv9w
   category: Announcements
-  category-id: DIC_kwDOJ9-tlM4CYB43
+  category-id: DIC_kwDOJ9jv984CYCC-
   theme-light: light
   theme-dark: dark
   mapping: pathname
