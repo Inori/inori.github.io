@@ -14,19 +14,27 @@ Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [docume
 ## Quick Start
 
 ### Math test
+
+This is inline latex: $c = \pm\sqrt{a^2+b^2}$
+
+This is block level latex:
+
 $$
-\hat{f}\left( \xi \right) =\int_{-\infty}^{\infty}{f\left( x \right) e^{-2\pi ix\xi}\mathrm{d}x}
-$$
-$$
-a^2+b^2=c^2
-$$
-$$
-e^{i\varphi}=\cos \varphi +i\sin \varphi 
-$$
-$$
-e^{i\pi}+1=0
+c = \pm\sqrt{a^2+b^2}
 $$
 
+This is block level latex with new line:
+$$
+\begin{array}{}
+\hat{f}\left( \xi \right) =\int_{-\infty}^{\infty}{f\left( x \right) e^{-2\pi ix\xi}\mathrm{d}x}
+\\
+a^2+b^2=c^2
+\\
+e^{i\varphi}=\cos \varphi +i\sin \varphi 
+\\
+e^{i\pi}+1=0
+\end{array}
+$$
 
 
 
