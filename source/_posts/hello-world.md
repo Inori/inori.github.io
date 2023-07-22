@@ -1,5 +1,6 @@
 ---
 title: Hello World
+date: 2023/07/20
 categories:
 - Mathematics for Computer Graphics
 tags:
