@@ -16,16 +16,15 @@ Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [docume
 ### Math test
 $$
 \hat{f}\left( \xi \right) =\int_{-\infty}^{\infty}{f\left( x \right) e^{-2\pi ix\xi}\mathrm{d}x}
-$$
-$$
+\\
 a^2+b^2=c^2
-$$
-$$
+\\
 e^{i\varphi}=\cos \varphi +i\sin \varphi 
-$$
-$$
+\\
 e^{i\pi}+1=0
 $$
+
+
 
 
 ### Create a new post
