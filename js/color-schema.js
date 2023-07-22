@@ -217,6 +217,32 @@
     }, 200);
   }
 
+  function setGiscusTheme(schema) {
+    var giscus = document.querySelector('iframe.giscus-frame');
+    if (giscus) {
+      var giscusTheme = schema === 'dark' ? window.GiscusThemeDark : window.GiscusThemeLight;
+      const message = {
+        setConfig: {
+          theme: giscusTheme,
+        }
+      };
+      giscus.style.cssText += 'color-scheme: normal;';
+      giscus.contentWindow.postMessage({ 'giscus': message }, 'https://giscus.app');
+    }
+  }
+
+  function setUtterancesTheme(schema) {
+    var utterances = document.querySelector('.utterances-frame');
+    if (utterances) {
+      var utterancesTheme = schema === 'dark' ? window.UtterancesThemeDark : window.UtterancesThemeLight;
+      const message = {
+        type : 'set-theme',
+        theme: utterancesTheme
+      };
+      utterances.contentWindow.postMessage(message, 'https://utteranc.es');
+    }
+  }
+
   function setApplications(schema) {
     // 设置 remark42 评论主题
     if (window.REMARK42) {
@@ -229,28 +255,10 @@
     }
 
     // 设置 utterances 评论主题
-    var utterances = document.querySelector('.utterances-frame');
-    if (utterances) {
-      var utterancesTheme = schema === 'dark' ? window.UtterancesThemeDark : window.UtterancesThemeLight;
-      const message = {
-        type : 'set-theme',
-        theme: utterancesTheme
-      };
-      utterances.contentWindow.postMessage(message, 'https://utteranc.es');
-    }
+    setUtterancesTheme(schema);
 
     // 设置 giscus 评论主题
-    var giscus = document.querySelector('iframe.giscus-frame');
-    if (giscus) {
-      var giscusTheme = schema === 'dark' ? window.GiscusThemeDark : window.GiscusThemeLight;
-      const message = {
-        setConfig: {
-          theme: giscusTheme,
-        }
-      };
-      giscus.style.cssText += 'color-scheme: normal;';
-      giscus.contentWindow.postMessage({ 'giscus': message }, 'https://giscus.app');
-    }
+    setGiscusTheme(schema);
   }
 
   // 当页面加载时，将显示模式设置为 localStorage 中自定义的值（如果有的话）
@@ -280,7 +288,8 @@
   });
 
   Fluid.utils.waitElementLoaded(iframeSelector, function() {
-    applyCustomColorSchemaSettings();
+    var schema = getLS(colorSchemaStorageKey) || getDefaultColorSchema();
+    setApplications(schema);
   });
   
 })(window, document);
