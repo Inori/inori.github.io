@@ -23,17 +23,44 @@ $$
 c = \pm\sqrt{a^2+b^2}
 $$
 
-This is block level latex with new line:
+This is block level latex with new lines:
 $$
 \begin{array}{}
 \hat{f}\left( \xi \right) =\int_{-\infty}^{\infty}{f\left( x \right) e^{-2\pi ix\xi}\mathrm{d}x}
-\\
-a^2+b^2=c^2
-\\
+\\\\
 e^{i\varphi}=\cos \varphi +i\sin \varphi 
-\\
+\\\\
 e^{i\pi}+1=0
-\end{array}
+\end{array} 
+$$
+
+
+$$
+\boldsymbol{A}=\left[ \begin{array}{l}
+	a_{11}&		a_{12}&		\cdots&		a_{1n}\\\\
+	a_{21}&		a_{22}&		\cdots&		a_{2n}\\\\
+	\vdots&		\vdots&		\ddots&		\vdots\\\\
+	a_{n1}&		a_{n2}&		\cdots&		a_{nn}\\\\
+\end{array} \right] 
+$$
+
+$$
+\boldsymbol{Ax}=\left[ \begin{array}{l}
+	a_{11}&		a_{12}&		\cdots&		a_{1n}\\\\
+	a_{21}&		a_{22}&		\cdots&		a_{2n}\\\\
+	\vdots&		\vdots&		\ddots&		\vdots\\\\
+	a_{m1}&		a_{m2}&		\cdots&		a_{mn}\\\\
+\end{array} \right] \left[ \begin{array}{l}
+	x_1\\\\
+	x_2\\\\
+	\vdots\\\\
+	x_n\\\\
+\end{array} \right] =\left[ \begin{array}{c}
+	a_{11}x_1+a_{12}x_2+\cdots +a_{1n}x_n\\\\
+	a_{21}x_1+a_{22}x_2+\cdots +a_{2n}x_n\\\\
+	\vdots\\\\
+	a_{m1}x_1+a_{m2}x_2+\cdots +a_{mn}x_n\\\\
+\end{array} \right] \in \mathbb{R} ^m
 $$
 
 
