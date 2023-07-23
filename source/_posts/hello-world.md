@@ -1,6 +1,6 @@
 ---
 title: Hello World
-date: 2023/07/20
+date: 2023/07/20 20:00:00
 math: true
 categories:
 - Mathematics for Computer Graphics
