@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>对法线变换矩阵的理解</title>
+    <link href="/2023/07/23/%E5%AF%B9%E6%B3%95%E7%BA%BF%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5%E7%9A%84%E7%90%86%E8%A7%A3/"/>
+    <url>/2023/07/23/%E5%AF%B9%E6%B3%95%E7%BA%BF%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5%E7%9A%84%E7%90%86%E8%A7%A3/</url>
+    
+    <content type="html"><![CDATA[<p>tangent向量($T$)表示和surface平行的向量，在三角形中可以用两个vertex的差计算，<br>所以T的变换矩阵和vertex的一样，但法线($N$)不同，由于有切变的存在，如果还用相同的矩阵左乘，变换之后的法线将不再和原来的surface垂直:  </p><img src="/2023/07/23/%E5%AF%B9%E6%B3%95%E7%BA%BF%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5%E7%9A%84%E7%90%86%E8%A7%A3/error.jpg" class="" title="错误情况"><br/><br/><p>为了确保变换之后的法线依然垂直于surface, 可以从如下条件出发进行推导:<br>$$<br>N\cdot T&#x3D;N^{\prime}\cdot T^{\prime}&#x3D;0<br>$$</p><p>推导过程：  </p><img src="/2023/07/23/%E5%AF%B9%E6%B3%95%E7%BA%BF%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5%E7%9A%84%E7%90%86%E8%A7%A3/normal_transform.jpg" class="" title="过程推导"><br/><br/><p>最终有：<br>$$<br>G&#x3D;\left( M^{-1} \right) ^T<br>$$</p><p>即法线的变换矩阵是原矩阵的逆转置(inverse transpose)  </p><p>如果原矩阵是正交矩阵，那么有：<br>$$<br>M^{-1}&#x3D;M^T<br>$$<br>代入上式可得：<br>$$<br>G&#x3D;M<br>$$<br>也就是说如果原来是正交变换，那么法线可以直接用原来的矩阵变换  </p><p>其实几何上是因为，正交矩阵行向量与列向量皆为正交的单位向量，所代表的变换只能是旋转或镜像，有保证原始图形不变形的特性，叫做保距映射，那么因为原来的图形没有变形，法线自然也就不用特殊处理</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Mathematics for Computer Graphics</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Math</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Hello World</title>
     <link href="/2023/07/20/hello-world/"/>
     <url>/2023/07/20/hello-world/</url>
