@@ -53,30 +53,5 @@
   
   
   
-  <entry>
-    <title>Hello World</title>
-    <link href="/2023/07/20/hello-world/"/>
-    <url>/2023/07/20/hello-world/</url>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Math-test"><a href="#Math-test" class="headerlink" title="Math test"></a>Math test</h3><p>This is inline latex: $c &#x3D; \pm\sqrt{a^2+b^2}$</p><p>This is block level latex:</p><p>$$<br>c &#x3D; \pm\sqrt{a^2+b^2}<br>$$</p><p>This is block level latex with new lines:<br>$$<br>\begin{array}{}<br>\hat{f}\left( \xi \right) &#x3D;\int_{-\infty}^{\infty}{f\left( x \right) e^{-2\pi ix\xi}\mathrm{d}x}<br>\\<br>e^{i\varphi}&#x3D;\cos \varphi +i\sin \varphi<br>\\<br>e^{i\pi}+1&#x3D;0<br>\end{array}<br>$$</p><p>$$<br>\boldsymbol{A}&#x3D;\left[ \begin{array}{l}<br>    a_{11}&amp;a_{12}&amp;\cdots&amp;a_{1n}\\<br>    a_{21}&amp;a_{22}&amp;\cdots&amp;a_{2n}\\<br>    \vdots&amp;\vdots&amp;\ddots&amp;\vdots\\<br>    a_{n1}&amp;a_{n2}&amp;\cdots&amp;a_{nn}\\<br>\end{array} \right]<br>$$</p><p>$$<br>\boldsymbol{Ax}&#x3D;\left[ \begin{array}{l}<br>    a_{11}&amp;a_{12}&amp;\cdots&amp;a_{1n}\\<br>    a_{21}&amp;a_{22}&amp;\cdots&amp;a_{2n}\\<br>    \vdots&amp;\vdots&amp;\ddots&amp;\vdots\\<br>    a_{m1}&amp;a_{m2}&amp;\cdots&amp;a_{mn}\\<br>\end{array} \right] \left[ \begin{array}{l}<br>    x_1\\<br>    x_2\\<br>    \vdots\\<br>    x_n\\<br>\end{array} \right] &#x3D;\left[ \begin{array}{c}<br>    a_{11}x_1+a_{12}x_2+\cdots +a_{1n}x_n\\<br>    a_{21}x_1+a_{22}x_2+\cdots +a_{2n}x_n\\<br>    \vdots\\<br>    a_{m1}x_1+a_{m2}x_2+\cdots +a_{mn}x_n\\<br>\end{array} \right] \in \mathbb{R} ^m<br>$$</p><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-    
-    
-    <categories>
-      
-      <category>Mathematics for Computer Graphics</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>Math</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
   
 </search>
