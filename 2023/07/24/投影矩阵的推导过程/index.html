@@ -16,25 +16,29 @@
   <meta name="author" content="Asuka">
   <meta name="keywords" content="">
   
-    <meta name="description" content="tangent向量($T$)表示和surface平行的向量，在三角形中可以用两个vertex的差计算，所以T的变换矩阵和vertex的一样，但法线($N$)不同，由于有切变的存在，如果还用相同的矩阵左乘，变换之后的法线将不再和原来的surface垂直:        为了确保变换之后的法线依然垂直于surface, 可以从如下条件出发进行推导:$$N\cdot T&#x3D;N^{\prime}\">
+    <meta name="description" content="目标如下图所示，把View Space的坐标映射到Clip Space:                                            这里先做一些前置说明：设View Space (也可以叫做Eye Space)里的点坐标为 $\left( x_e, y_e, z_e, 1 \right) $设Clip Space 里的点坐标为 $\left( x_c, y_c, z_c">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对法线变换矩阵的理解">
-<meta property="og:url" content="https://inori.github.io/2023/07/23/%E5%AF%B9%E6%B3%95%E7%BA%BF%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5%E7%9A%84%E7%90%86%E8%A7%A3/index.html">
+<meta property="og:title" content="投影矩阵的推导过程">
+<meta property="og:url" content="https://inori.github.io/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Asuka&#39;s Blog">
-<meta property="og:description" content="tangent向量($T$)表示和surface平行的向量，在三角形中可以用两个vertex的差计算，所以T的变换矩阵和vertex的一样，但法线($N$)不同，由于有切变的存在，如果还用相同的矩阵左乘，变换之后的法线将不再和原来的surface垂直:        为了确保变换之后的法线依然垂直于surface, 可以从如下条件出发进行推导:$$N\cdot T&#x3D;N^{\prime}\">
+<meta property="og:description" content="目标如下图所示，把View Space的坐标映射到Clip Space:                                            这里先做一些前置说明：设View Space (也可以叫做Eye Space)里的点坐标为 $\left( x_e, y_e, z_e, 1 \right) $设Clip Space 里的点坐标为 $\left( x_c, y_c, z_c">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://inori.github.io/2023/07/23/%E5%AF%B9%E6%B3%95%E7%BA%BF%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5%E7%9A%84%E7%90%86%E8%A7%A3/error.jpg">
-<meta property="og:image" content="https://inori.github.io/2023/07/23/%E5%AF%B9%E6%B3%95%E7%BA%BF%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5%E7%9A%84%E7%90%86%E8%A7%A3/normal_transform.jpg">
-<meta property="article:published_time" content="2023-07-23T18:46:21.000Z">
+<meta property="og:image" content="https://inori.github.io/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/map.png">
+<meta property="og:image" content="https://inori.github.io/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/proc1.jpg">
+<meta property="og:image" content="https://inori.github.io/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/proc2.jpg">
+<meta property="og:image" content="https://inori.github.io/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/proc3.jpg">
+<meta property="og:image" content="https://inori.github.io/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/proc4.jpg">
+<meta property="og:image" content="https://inori.github.io/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/z_map.jpg">
+<meta property="article:published_time" content="2023-07-24T17:23:51.000Z">
 <meta property="article:modified_time" content="2023-07-24T19:04:43.642Z">
 <meta property="article:author" content="Asuka">
 <meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://inori.github.io/2023/07/23/%E5%AF%B9%E6%B3%95%E7%BA%BF%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5%E7%9A%84%E7%90%86%E8%A7%A3/error.jpg">
+<meta name="twitter:image" content="https://inori.github.io/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/map.png">
   
   
   
-  <title>对法线变换矩阵的理解 - Asuka&#39;s Blog</title>
+  <title>投影矩阵的推导过程 - Asuka&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +233,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">对法线变换矩阵的理解</span>
+            <span id="subtitle">投影矩阵的推导过程</span>
           
         </div>
 
@@ -240,8 +244,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-07-24 02:46" pubdate>
-          July 24, 2023 am
+        <time datetime="2023-07-25 01:23" pubdate>
+          July 25, 2023 am
         </time>
       </span>
     
@@ -252,7 +256,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          463 words
+          524 words
         
       </span>
     
@@ -308,7 +312,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">对法线变换矩阵的理解</h1>
+            <h1 id="seo-header">投影矩阵的推导过程</h1>
             
               <p class="note note-info">
                 
@@ -321,23 +325,29 @@
             
               <div class="markdown-body">
                 
-                <p>tangent向量($T$)表示和surface平行的向量，在三角形中可以用两个vertex的差计算，<br>所以T的变换矩阵和vertex的一样，但法线($N$)不同，由于有切变的存在，如果还用相同的矩阵左乘，变换之后的法线将不再和原来的surface垂直:  </p>
-<img src="/2023/07/23/%E5%AF%B9%E6%B3%95%E7%BA%BF%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5%E7%9A%84%E7%90%86%E8%A7%A3/error.jpg" srcset="/img/loading.gif" lazyload class="" title="错误情况">
+                <p>目标如下图所示，把View Space的坐标映射到Clip Space: </p>
+<img src="/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/map.png" srcset="/img/loading.gif" lazyload class="" title="空间映射">                                         
+<p>这里先做一些前置说明：<br>设View Space (也可以叫做Eye Space)里的点坐标为 $\left( x_e, y_e, z_e, 1 \right) $<br>设Clip Space 里的点坐标为 $\left( x_c, y_c, z_c, w_c \right) $<br>设 NDC Space 里点的坐标为 $\left( x_n, y_n, z_n, 1 \right) $</p>
+<p>同时不考虑viewport非中心对称的情况 (非中心对称时$x_e$和$x_c$并非线性关系)</p>
+<p>以下为推导过程：</p>
+<img src="/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/proc1.jpg" srcset="/img/loading.gif" lazyload class="" title="proc1">
+<img src="/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/proc2.jpg" srcset="/img/loading.gif" lazyload class="" title="proc2">
+<img src="/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/proc3.jpg" srcset="/img/loading.gif" lazyload class="" title="proc3">
 
-<br/>
-<br/>
-
-<p>为了确保变换之后的法线依然垂直于surface, 可以从如下条件出发进行推导:<br>$$<br>N\cdot T&#x3D;N^{\prime}\cdot T^{\prime}&#x3D;0<br>$$</p>
-<p>推导过程：  </p>
-<img src="/2023/07/23/%E5%AF%B9%E6%B3%95%E7%BA%BF%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5%E7%9A%84%E7%90%86%E8%A7%A3/normal_transform.jpg" srcset="/img/loading.gif" lazyload class="" title="过程推导">
-
-<br/>
+<br/> 
 <br/>
 
-<p>最终有：<br>$$<br>G&#x3D;\left( M^{-1} \right) ^T<br>$$</p>
-<p>即法线的变换矩阵是原矩阵的逆转置(inverse transpose)  </p>
-<p>如果原矩阵是正交矩阵，那么有：<br>$$<br>M^{-1}&#x3D;M^T<br>$$<br>代入上式可得：<br>$$<br>G&#x3D;M<br>$$<br>也就是说如果原来是正交变换，那么法线可以直接用原来的矩阵变换  </p>
-<p>其实几何上是因为，正交矩阵行向量与列向量皆为正交的单位向量，所代表的变换只能是旋转或镜像，有保证原始图形不变形的特性，叫做保距映射，那么因为原来的图形没有变形，法线自然也就不用特殊处理</p>
+<p>同时观察$z_e$和$z_n$之前的映射关系:</p>
+<img src="/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/proc4.jpg" srcset="/img/loading.gif" lazyload class="" title="proc4">
+
+<br/> 
+<br/>
+
+<p>画个函数图像，绿色和红色$(n,f)$取值分别为 (1, 3), (1, 100):</p>
+<img src="/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/z_map.jpg" srcset="/img/loading.gif" lazyload class="" title="z_map"> 
+
+<p>从图上可以看出：<br>相同$f$值的情况下，$z_e$越接近远平面，其变化引起$z_n$的变化越不明显<br>相同$z_e$值的情况下，$f$越小，变化率(导数)越大<br>这个特性和z-fighting相关，因为$f$较大的情况下，$z_e$的微小变动几乎不会引起$z_n$的变化</p>
+<p>这里想到一点，就是depth buffer里存储的是perspective divide之后的z值，所以early depth test发生在<br>perspective divide之后</p>
 
                 
               </div>
@@ -383,8 +393,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>对法线变换矩阵的理解</div>
-      <div>https://inori.github.io/2023/07/23/对法线变换矩阵的理解/</div>
+      <div>投影矩阵的推导过程</div>
+      <div>https://inori.github.io/2023/07/24/投影矩阵的推导过程/</div>
     </div>
     <div class="license-meta">
       
@@ -396,7 +406,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>July 24, 2023</div>
+          <div>July 25, 2023</div>
         </div>
       
       
@@ -428,18 +438,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/" title="投影矩阵的推导过程">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">投影矩阵的推导过程</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/07/20/hello-world/" title="Hello World">
-                        <span class="hidden-mobile">Hello World</span>
+                      <a href="/2023/07/23/%E5%AF%B9%E6%B3%95%E7%BA%BF%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5%E7%9A%84%E7%90%86%E8%A7%A3/" title="对法线变换矩阵的理解">
+                        <span class="hidden-mobile">对法线变换矩阵的理解</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

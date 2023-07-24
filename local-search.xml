@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>投影矩阵的推导过程</title>
+    <link href="/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/"/>
+    <url>/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/</url>
+    
+    <content type="html"><![CDATA[<p>目标如下图所示，把View Space的坐标映射到Clip Space: </p><img src="/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/map.png" class="" title="空间映射">                                         <p>这里先做一些前置说明：<br>设View Space (也可以叫做Eye Space)里的点坐标为 $\left( x_e, y_e, z_e, 1 \right) $<br>设Clip Space 里的点坐标为 $\left( x_c, y_c, z_c, w_c \right) $<br>设 NDC Space 里点的坐标为 $\left( x_n, y_n, z_n, 1 \right) $</p><p>同时不考虑viewport非中心对称的情况 (非中心对称时$x_e$和$x_c$并非线性关系)</p><p>以下为推导过程：</p><img src="/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/proc1.jpg" class="" title="proc1"><img src="/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/proc2.jpg" class="" title="proc2"><img src="/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/proc3.jpg" class="" title="proc3"><br/> <br/><p>同时观察$z_e$和$z_n$之前的映射关系:</p><img src="/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/proc4.jpg" class="" title="proc4"><br/> <br/><p>画个函数图像，绿色和红色$(n,f)$取值分别为 (1, 3), (1, 100):</p><img src="/2023/07/24/%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B/z_map.jpg" class="" title="z_map"> <p>从图上可以看出：<br>相同$f$值的情况下，$z_e$越接近远平面，其变化引起$z_n$的变化越不明显<br>相同$z_e$值的情况下，$f$越小，变化率(导数)越大<br>这个特性和z-fighting相关，因为$f$较大的情况下，$z_e$的微小变动几乎不会引起$z_n$的变化</p><p>这里想到一点，就是depth buffer里存储的是perspective divide之后的z值，所以early depth test发生在<br>perspective divide之后</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Mathematics for Computer Graphics</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Math</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>对法线变换矩阵的理解</title>
     <link href="/2023/07/23/%E5%AF%B9%E6%B3%95%E7%BA%BF%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5%E7%9A%84%E7%90%86%E8%A7%A3/"/>
     <url>/2023/07/23/%E5%AF%B9%E6%B3%95%E7%BA%BF%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5%E7%9A%84%E7%90%86%E8%A7%A3/</url>
