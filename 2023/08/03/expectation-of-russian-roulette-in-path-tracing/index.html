@@ -16,21 +16,21 @@
   <meta name="author" content="Asuka">
   <meta name="keywords" content="">
   
-    <meta name="description" content="简介Path Tracing 的递归算法中要解决一个问题，就是光线不能无限反射，需要有一个停止的条件，一种方法就是使用俄罗斯轮盘赌，Russian Roulette (RR)，只有通过RR时才继续算反射，否则停止递归，这样即能避免无限递归，又能保证能量守恒。 结论于是就引出一个问题，设RR通过概率概率是$p$，$p&#x3D;0$不反射，$p&#x3D;1$无限次反射，那么$0&lt;p&lt;1">
+    <meta name="description" content="简介Path Tracing 的递归算法中要解决一个问题，就是光线不能无限反射，需要有一个停止的条件，一种方法就是使用俄罗斯轮盘赌，Russian Roulette (RR)，只有通过RR时才继续算反射，否则停止递归，这样即能避免无限递归，又能保证能量守恒。 误区和群友Irimsky &#96;讨论发现之前自己的计算是不对的，之前我认为期望就简单这么算：$$E\left( p \right) &amp;#">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Path Tracing 中 Russian Roulette 的期望">
 <meta property="og:url" content="https://inori.github.io/2023/08/03/expectation-of-russian-roulette-in-path-tracing/index.html">
 <meta property="og:site_name" content="Asuka&#39;s Blog">
-<meta property="og:description" content="简介Path Tracing 的递归算法中要解决一个问题，就是光线不能无限反射，需要有一个停止的条件，一种方法就是使用俄罗斯轮盘赌，Russian Roulette (RR)，只有通过RR时才继续算反射，否则停止递归，这样即能避免无限递归，又能保证能量守恒。 结论于是就引出一个问题，设RR通过概率概率是$p$，$p&#x3D;0$不反射，$p&#x3D;1$无限次反射，那么$0&lt;p&lt;1">
+<meta property="og:description" content="简介Path Tracing 的递归算法中要解决一个问题，就是光线不能无限反射，需要有一个停止的条件，一种方法就是使用俄罗斯轮盘赌，Russian Roulette (RR)，只有通过RR时才继续算反射，否则停止递归，这样即能避免无限递归，又能保证能量守恒。 误区和群友Irimsky &#96;讨论发现之前自己的计算是不对的，之前我认为期望就简单这么算：$$E\left( p \right) &amp;#">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://inori.github.io/2023/08/03/expectation-of-russian-roulette-in-path-tracing/test.jpg">
 <meta property="og:image" content="https://inori.github.io/2023/08/03/expectation-of-russian-roulette-in-path-tracing/p1.jpg">
-<meta property="og:image" content="https://inori.github.io/2023/08/03/expectation-of-russian-roulette-in-path-tracing/p2.jpg">
 <meta property="article:published_time" content="2023-08-03T18:49:02.000Z">
-<meta property="article:modified_time" content="2023-08-03T19:07:40.297Z">
+<meta property="article:modified_time" content="2023-08-04T20:01:51.614Z">
 <meta property="article:author" content="Asuka">
 <meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://inori.github.io/2023/08/03/expectation-of-russian-roulette-in-path-tracing/p1.jpg">
+<meta name="twitter:image" content="https://inori.github.io/2023/08/03/expectation-of-russian-roulette-in-path-tracing/test.jpg">
   
   
   
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          428 words
+          1k words
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          4 mins
+          8 mins
         
       </span>
     
@@ -313,7 +313,7 @@
               <p class="note note-info">
                 
                   
-                    Last updated on August 4, 2023 am
+                    Last updated on August 5, 2023 am
                   
                 
               </p>
@@ -322,9 +322,17 @@
               <div class="markdown-body">
                 
                 <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Path Tracing 的递归算法中要解决一个问题，就是光线不能无限反射，需要有一个停止的条件，一种方法就是使用俄罗斯轮盘赌，Russian Roulette (RR)，只有通过RR时才继续算反射，否则停止递归，这样即能避免无限递归，又能保证能量守恒。</p>
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>于是就引出一个问题，设RR通过概率概率是$p$，$p&#x3D;0$不反射，$p&#x3D;1$无限次反射，那么$0&lt;p&lt;1$对应多少次反射呢？也就是说得求出$p$的期望$E\left( p \right) $<br>这里先给出最终答案：<br>$$<br>E\left( p \right) &#x3D;\frac{p}{\left( 1-p \right) ^2}<br>$$<br>也就是说，如果$p&#x3D;0.5$，那么大体上会反射2次，$p&#x3D;0.8$，大体上会反射20次</p>
+<h3 id="误区"><a href="#误区" class="headerlink" title="误区"></a>误区</h3><p>和群友Irimsky &#96;讨论发现之前自己的计算是不对的，之前我认为期望就简单这么算：<br>$$<br>E\left( p \right) &#x3D;1p+2p^2+3p^3+\cdots +np^p<br>$$<br>就简单反射次数乘以$p$的$n$次方，最后算出来：<br>$$<br>E\left( p \right) &#x3D;\frac{p}{\left( 1-p \right) ^2}<br>$$<br>但是这是不对的，这种情况下$p&#x3D;0.5$，期望是2次，$p&#x3D;0.8$，是20次。<br>为此我还写了段代码来数值计算：</p>
+<img src="/2023/08/03/expectation-of-russian-roulette-in-path-tracing/test.jpg" srcset="/img/loading.gif" lazyload class="" title="p2">  
+<br/>
+<br/>
+结果显然和上面的公式不符，那么错到哪了呢？  
+错的地方就在于，之前计算的时候，没有考虑失败的情况，比如说认为反射2次的情况是$2p^2$，但是这种情况下，**第3次会不会反射是不确定的**，正确的算法应该是再乘以失败的概率来终结反射，也就是$3p^2(1-p)$
+
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>设RR通过概率概率是$p$，$p&#x3D;0$不反射，$p&#x3D;1$无限次反射，$0&lt;p&lt;1$时期望为：<br>$$<br>E\left( p \right) &#x3D;\frac{p}{1-p}<br>$$</p>
+<p>也就是说，如果$p&#x3D;0.5$，那么大体上会反射2次，$p&#x3D;0.8$，大体上会反射4次<br><br/><br>其实这里的概率就是几何分布，几何分布就是求前n-1次失败的前提下，第n次成功的概率，如果熟悉概率公式，几何分布的期望就是：<br>$$<br>E\left( p \right) &#x3D;\frac{1}{p}<br>$$<br>对于我们的情况，要把成功和失败反过来，因为我们要算的是前n-1次成功，第n次失败情况，也就是说，赌局总次数的期望为：<br>$$<br>E\left( p \right) &#x3D;\frac{1}{1-p}<br>$$<br>再减去最后一次的失败，那么反射次数就是：<br>$$<br>S\left( p \right) &#x3D;E\left( p \right) -1<br>\<br>&#x3D;\frac{1}{1-p}-1<br>\<br>&#x3D;\frac{p}{1-p}<br>$$</p>
 <h3 id="推导过程"><a href="#推导过程" class="headerlink" title="推导过程"></a>推导过程</h3><img src="/2023/08/03/expectation-of-russian-roulette-in-path-tracing/p1.jpg" srcset="/img/loading.gif" lazyload class="" title="p1">  
-<img src="/2023/08/03/expectation-of-russian-roulette-in-path-tracing/p2.jpg" srcset="/img/loading.gif" lazyload class="" title="p2">  
+
 
 <h3 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h3><p>Games 101<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1X7411F744?t=3248.4&p=16">https://www.bilibili.com/video/BV1X7411F744?t=3248.4&amp;p=16</a></p>
 
