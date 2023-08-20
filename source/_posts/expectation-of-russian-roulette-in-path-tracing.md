@@ -6,6 +6,7 @@ categories:
 - Mathematics for Computer Graphics
 tags:
 - Math
+- Games101
 ---
 
 ### 简介
