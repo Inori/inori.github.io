@@ -11,6 +11,8 @@ tags:
 
 ### 曲线空间坐标
 
+其实想获得球坐标下拉普拉斯方程，完全可以不用曲线坐标，直接把球坐标的参数方程代入到拉普拉斯方程中一步步求微分，也能算出来，但是这样计算量会非常大，稍微马虎就会出错，而如果拿到曲线坐标下计算，过程要简单的多
+
 {% asset_img q1q2q3.jpg q1q2q3 %}  
 {% asset_img 1.jpg p1 %}  
 {% asset_img 2.jpg p2 %}  
@@ -36,12 +38,12 @@ tags:
 {% asset_img 7.jpg p7 %}  
 {% asset_img 8.jpg p8 %}  
 
-### 解 $\varphi $ 方程
+### 解 $\varphi $ 微分方程
 
 {% asset_img 9.jpg p9 %}  
 {% asset_img 10.jpg p10 %}  
 
-### 解 $\theta $ 方程
+### 解 $\theta $ 微分方程
 
 {% asset_img 11.jpg p11 %}  
 
