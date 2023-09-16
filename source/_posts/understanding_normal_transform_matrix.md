@@ -1,5 +1,6 @@
 ---
 title: 对法线变换矩阵的理解
+index_img: error.jpg
 date: 2023-07-24 02:46:21
 math: true
 categories:

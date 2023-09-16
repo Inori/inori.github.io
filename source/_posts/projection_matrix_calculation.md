@@ -1,5 +1,6 @@
 ---
 title: 投影矩阵的推导过程
+index_img: map.png
 date: 2023-07-25 01:23:51
 math: true
 categories:

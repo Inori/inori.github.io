@@ -1,5 +1,6 @@
 ---
 title: 齐次坐标与变换的几何解释
+index_img: hc1.jpg
 date: 2023-07-25 20:46:34
 math: true
 categories:

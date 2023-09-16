@@ -1,5 +1,6 @@
 ---
 title: Path Tracing 中 Russian Roulette 的期望
+index_img: index.jpg
 date: 2023-08-04 02:49:02
 math: true
 categories:

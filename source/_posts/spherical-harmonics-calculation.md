@@ -1,5 +1,6 @@
 ---
 title: 球谐函数的计算与证明
+index_img: sh.jpg
 date: 2023-08-23 01:39:12
 math: true
 categories:
