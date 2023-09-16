@@ -16,21 +16,25 @@
   <meta name="author" content="Asuka">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Some notes on math and rendering during my learning process">
-<meta property="og:type" content="website">
-<meta property="og:title" content="About">
-<meta property="og:url" content="https://inori.github.io/about/index.html">
+    <meta name="description" content="Start为了学习图形学相关的算法，打算用经典的Sponza场景自己实现GI，GI算法不只一种，而且经常是几种结合使用，所以我计划写个系列博客，记录一下学习过程中遇到的困难，非教学向。 Nvidia Falcor开始的时候其实是打算用Vulkan从最底层写起的，框架都写好了。 不过从之前的经验来看，从最底层写起其实是很花时间的，要手动处理资源绑定、ImageLayout转换、barrier等等细节">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Global illumination for Sponza][1] 搭建环境">
+<meta property="og:url" content="https://inori.github.io/2023/09/16/global-illumination-for-sponza-1/index.html">
 <meta property="og:site_name" content="Asuka&#39;s Blog">
-<meta property="og:description" content="Some notes on math and rendering during my learning process">
+<meta property="og:description" content="Start为了学习图形学相关的算法，打算用经典的Sponza场景自己实现GI，GI算法不只一种，而且经常是几种结合使用，所以我计划写个系列博客，记录一下学习过程中遇到的困难，非教学向。 Nvidia Falcor开始的时候其实是打算用Vulkan从最底层写起的，框架都写好了。 不过从之前的经验来看，从最底层写起其实是很花时间的，要手动处理资源绑定、ImageLayout转换、barrier等等细节">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-07-20T07:20:59.000Z">
-<meta property="article:modified_time" content="2023-09-16T19:17:54.785Z">
+<meta property="og:image" content="https://inori.github.io/2023/09/16/global-illumination-for-sponza-1/sponza.jpg">
+<meta property="article:published_time" content="2023-09-16T18:13:12.000Z">
+<meta property="article:modified_time" content="2023-09-16T19:17:54.761Z">
 <meta property="article:author" content="Asuka">
+<meta property="article:tag" content="CG">
+<meta property="article:tag" content="GI">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://inori.github.io/2023/09/16/global-illumination-for-sponza-1/sponza.jpg">
   
   
   
-  <title>About - Asuka&#39;s Blog</title>
+  <title>[Global illumination for Sponza][1] 搭建环境 - Asuka&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -119,7 +123,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -237,9 +241,57 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="About"></span>
+            <span id="subtitle">[Global illumination for Sponza][1] 搭建环境</span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-17 02:13" pubdate>
+          September 17, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          498 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          4 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> views
+        </span>
+        
+      
+    
+  </div>
+
 
         
       </div>
@@ -255,74 +307,215 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div id="board"
-          >
-          
-            <div class="about-avatar">
-              <img src="/img/asuka.png" srcset="/img/loading.gif" lazyload class="img-fluid" alt="avatar">
-            </div>
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
+      
 
-<div class="text-center">
-  <div class="about-info">
-    <div class="about-name">Asuka</div>
-    <div class="about-intro">A blog about computer graphics and game development</div>
-    <div class="about-icons">
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
       
-        
-        
-        
-        <a href=https://github.com/Inori class="
-           hint--bottom hint--rounded"
-           aria-label=GitHub
-           target="_blank"
-        >
-          <i class="iconfont icon-github-fill" aria-hidden="true"></i>
-          
-        </a>
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">[Global illumination for Sponza][1] 搭建环境</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on September 17, 2023 am
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="Start"><a href="#Start" class="headerlink" title="Start"></a>Start</h3><p>为了学习图形学相关的算法，打算用经典的Sponza场景自己实现GI，GI算法不只一种，而且经常是几种结合使用，所以我计划写个系列博客，记录一下学习过程中遇到的困难，非教学向。</p>
+<h3 id="Nvidia-Falcor"><a href="#Nvidia-Falcor" class="headerlink" title="Nvidia Falcor"></a>Nvidia Falcor</h3><p>开始的时候其实是打算用Vulkan从最底层写起的，<a target="_blank" rel="noopener" href="https://github.com/Inori/GowVulkanSamples">框架</a>都写好了。</p>
+<p>不过从之前的经验来看，从最底层写起其实是很花时间的，要手动处理资源绑定、ImageLayout转换、barrier等等细节的东西，而且一但有某个细节出错，往往很难调试，会浪费更多时间。</p>
+<p>一个偶然的机会发现了Nvidia出了个<a target="_blank" rel="noopener" href="https://github.com/Inori/Falcor">Falcor</a>渲染框架，试了一下发现这玩意真是不错，抽象做的非常好，不用关心底层vulkan dx api的细节，资源绑定和传递都非常容易。而且复杂度适中，比自己调用Vulkan复杂，但是远比UE简单，可以很轻松就能理解框架代码。</p>
+<p>Falcor自带了很多现成的Rander Pass，不过我不打算使用，毕竟是出于学习目的，用现成的没有任何意义。我打算只用Falcor资源加载、绑定、传递部分的代码，其它算法、shader全部手写。</p>
+<h3 id="Sponza-Demo"><a href="#Sponza-Demo" class="headerlink" title="Sponza Demo"></a>Sponza Demo</h3><p>研究了一会，可以正常加载场景了，先blinn-phong搞起：</p>
+<img src="/2023/09/16/global-illumination-for-sponza-1/sponza.jpg" srcset="/img/loading.gif" lazyload class="" title="Sponza">  
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
       
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
         
-        
-        
-        <a href=https://space.bilibili.com/10181617 class="
-           hint--bottom hint--rounded"
-           aria-label=Bilibili
-           target="_blank"
-        >
-          <i class="iconfont icon-bilibili-fill" aria-hidden="true"></i>
-          
-        </a>
+  <a href="/categories/Global-Illumination/" class="category-chain-item">Global Illumination</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
       
-        
-        
-        
-        <a href=https://twitter.com/InoriAsuka class="
-           hint--bottom hint--rounded"
-           aria-label=Twitter
-           target="_blank"
-        >
-          <i class="iconfont icon-twitter-fill" aria-hidden="true"></i>
-          
-        </a>
+        <a href="/tags/CG/" class="print-no-link">#CG</a>
       
+        <a href="/tags/GI/" class="print-no-link">#GI</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>[Global illumination for Sponza][1] 搭建环境</div>
+      <div>https://inori.github.io/2023/09/16/global-illumination-for-sponza-1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Asuka</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>September 17, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/22/spherical-harmonics-calculation/" title="球谐函数的计算与证明">
+                        <span class="hidden-mobile">球谐函数的计算与证明</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Inori/inori.github.io","repo-id":"R_kgDOJ9jv9w","category":"Announcements","category-id":"DIC_kwDOJ9jv984CYCC-","theme-light":"light","theme-dark":"dark","mapping":"pathname","strict":1,"loading":"lazy","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"en"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
     </div>
   </div>
 </div>
 
-<article class="about-content page-content mt-5">
-  <div class="markdown-body">
-    <center>Some notes on math and rendering during my learning process</center>
-
-  </div>
-
-  
-</article>
-
 
 
 
@@ -349,11 +542,8 @@
 
 
 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+
     
 
     
@@ -448,21 +638,6 @@
 <script  src="/js/plugins.js" ></script>
 
 
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
 
 
 
@@ -471,6 +646,46 @@
   
 
 
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
 
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
