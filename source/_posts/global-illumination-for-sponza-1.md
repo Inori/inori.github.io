@@ -1,5 +1,6 @@
 ---
 title: '[Global illumination for Sponza][1] 搭建环境'
+index_img: index.jpg
 date: 2023-09-17 02:13:12
 categories:
 - Global Illumination
@@ -22,5 +23,46 @@ Falcor自带了很多现成的Rander Pass，不过我不打算使用，毕竟是
 
 ### Sponza Demo
 研究了一会，可以正常加载场景了，先blinn-phong搞起：
+```slang
+float4 psMain(VSOut vsOut, uint triangleIndex: SV_PrimitiveID) : SV_TARGET
+{
+    MaterialSystem ms = gScene.materials;
+    let lod = ImplicitLodTextureSampler();
+    SamplerState sampler = ms.getDefaultTextureSampler(vsOut.materialID);
+    BasicMaterialData bmd = ms.getBasicMaterialData(vsOut.materialID);
+
+    float4 baseColor = ms.sampleTexture(bmd.texBaseColor, sampler, vsOut.texC, float4(0.0), lod);
+    float4 normalMap = ms.sampleTexture(bmd.texNormalMap, sampler, vsOut.texC, float4(0.0), lod);
+    float4 specular = ms.sampleTexture(bmd.texSpecular, sampler, vsOut.texC, float4(0.0), lod);
+
+    float3 albedo = baseColor.rgb;
+    float3 nomalT = normalMap.xyz;
+    float3 normalW = vsOut.normalW;
+    float opacity = baseColor.a;
+    float roughness = specular.g;
+    float metallic = specular.b;
+
+
+    LightData light = gScene.getLight(1); // The sun
+    float3 lightDir = normalize(light.dirW);
+    float3 lightColor = light.intensity;
+
+    float3 ambient = albedo * 0.1;
+
+    float3 diffuse = saturate(dot(normalW, lightDir)) * albedo;
+
+    float3 viewDir = normalize(gScene.camera.getPosition() - vsOut.posW);
+    float3 H = normalize(viewDir + lightDir);
+
+    float cosTheta = pow(saturate(dot(normalW, H)), 20.0);
+    float3 spec = lightColor * cosTheta;
+
+    float3 color = ambient + diffuse + spec;
+
+    return float4(color, 1.0);
+}
+```
+
+效果：
 
 {% asset_img sponza.jpg Sponza %}  
